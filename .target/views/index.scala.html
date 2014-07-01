@@ -1,0 +1,18 @@
+@(user: String)
+
+<!DOCTYPE html>
+
+<html>
+    
+    <body>
+        <h3>Step 1) Create a pull request to the IAM role with your user:</h3>
+        @user
+        <h3>Step 2) Click this button to retrieve your temporary credentials</h3> 
+        
+        <form action="/retrieve_temporary_creds">
+        	Role ARN: <input type="text" name="arn" value="arn:aws:iam::765158521303:role/AuthRoleTest"><br></p>
+			<input type="submit" value="Retrieve your temporary credentials">
+		</form>
+				
+    </body>
+</html>
