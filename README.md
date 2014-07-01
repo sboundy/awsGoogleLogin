@@ -3,7 +3,7 @@ AWS Google Login
 
 [Visit GitHub!](www.github.com)
 
-A lightweight application to allow Google auth to be used with the [AWS STS service](http://docs.aws.amazon.com/STS/latest/APIReference/Welcome.html) via [IAM federation](http://aws.amazon.com/blogs/aws/aws-iam-now-supports-amazon-facebook-and-google-identity-federation/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+AmazonWebServicesBlog+(Amazon+Web+Services+Blog).
+A lightweight application to allow Google auth to be used with the [AWS STS service](http://docs.aws.amazon.com/STS/latest/APIReference/Welcome.html) via [IAM federation](http://aws.amazon.com/blogs/aws/aws-iam-now-supports-amazon-facebook-and-google-identity-federation/).
 
 While federation of Google auth is usually used by applications this small application allows it to be used for CLI or console access. This application is very much a proof of concept application but one that can be trimmed down further.  It can be run locally or remotely.
 
