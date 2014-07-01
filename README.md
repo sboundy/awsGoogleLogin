@@ -8,7 +8,7 @@ This application is very much a proof of concept application but one that can be
 API calls
 ----------
 
-This application makes a number of API calls and receives call backs -
+This application makes a number of API calls and receives call back from Google containing web token details.  This web token is used to call Amazon's Simple Token Service and request a short lived secret, access and session key.  A short lived console login is also constructed allowing for login without credentials.
 
 TODO
 
