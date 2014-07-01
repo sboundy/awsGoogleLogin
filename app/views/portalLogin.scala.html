@@ -1,0 +1,30 @@
+@(user: String, access_key: String, secret_key : String, session_token : String, token_expiry_time : String, fileLocation : String, url : String)
+
+<!DOCTYPE html>
+
+<html>
+    
+    <body>
+        <h3>Step 1) Create a pull request to the IAM role with your user:</h3>
+        Your subscription is @user
+        <h3>Step 2) Click this button to retrieve your temporary credentials</h3> 
+       
+        
+		</p>
+		 Your credentials are</p>
+		 <b>ACCESS KEY:</b> <small>@access_key</small></p>
+		 <b>SECRET KEY:</b> <small>@secret_key</small></p>
+		 <b>SESSION_TOKEN:</b> <small>@session_token</small></p>
+		 It expires in: @token_expiry_time seconds
+		 
+		
+		<h3>Step 3) Click this button to update your Amazon credential files</h3>
+		
+		File @fileLocation updated
+		
+		<h3>Step 4) Click this button to get an Amazon Portal login</h3>
+		
+       	<a href="@url"> Click here to login to the portal with your credentials </a>
+		
+    </body>
+</html>
