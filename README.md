@@ -5,14 +5,14 @@ A lightweight application to allow Google auth to be used with the [AWS STS serv
 
 Federation of Google auth is often used where client side access is needed to AWS resource (e.g. in mobile applications).  This application, however, allows Google auth to be used to issue tokens for CLI or console access. This application is very much a proof of concept application but one that can be trimmed down further.  It can be run locally or remotely.
 
-API calls
-----------
+Sequence of API calls
+----------------------
 
-This application makes a number of API calls and receives call back from Google containing web token details.  This web token is used to call Amazon's Simple Token Service and request a short lived secret, access and session key.  A short lived console login is also constructed allowing for login without credentials.
+This application makes the following API calls
 
-TODO
+- A number of calls via the [Google OAuth flow](https://developers.google.com/accounts/docs/OAuth2#basicsteps)
+- A call to STS to retrieve a short lived secret, access and session key
+- A call to the AWS sign in federation service to retrieve a short-lived console url
 
-Installation
--------------
+In addition, the application will update credentials in the .aws/config file.
 
-This is a simple play java application.  It requires both an AWS account and access to the Google developers console to setup a new application

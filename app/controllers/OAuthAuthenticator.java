@@ -77,8 +77,6 @@ public class OAuthAuthenticator extends Controller {
   
   public static void postLoginDetails(String code){
 	  
-	  String postContent = "code=" + code + "&client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "redirect_uri=" + REDIRECT_URI + "grant_type=authorization_code"; 
-	  
 	  HttpClient client = new DefaultHttpClient();
 	  HttpPost request = new HttpPost(GOOGLE_TOKEN_ENDPOINT);
 	    
