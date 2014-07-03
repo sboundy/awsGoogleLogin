@@ -29,16 +29,13 @@ public class AWSSecurityToken {
 	public static String sessionToken = new String();
 	public static String FILE_LOCATION = Play.application().configuration().getString("application.fileLocation");
 	
-
 	public static String getSecretKey(Element firstCredentialsElement) {
 		    
-	   
 		NodeList awsSecretAccessKeyId = firstCredentialsElement.getElementsByTagName("SecretAccessKey");			    	   	
 		Element awsSecretAccessKeyIdElement = (Element)awsSecretAccessKeyId.item(0);    
 		secretKey = awsSecretAccessKeyIdElement.getChildNodes().item(0).getNodeValue().trim();
 			    
-		return secretKey;
-			    				
+		return secretKey;	    				
 	}
 	
 	public static String getAccessKey(Element firstCredentialsElement) {
@@ -48,7 +45,6 @@ public class AWSSecurityToken {
 		accessKey = awsAccessKeyIdElement.getChildNodes().item(0).getNodeValue().trim();
 	 
 		return accessKey;
-
 	}
 			
 	public static String getSessionToken(Element firstCredentialsElement) {
@@ -58,7 +54,6 @@ public class AWSSecurityToken {
 		sessionToken = awsSessionTokenIdElement.getChildNodes().item(0).getNodeValue().trim();
 				
 		return sessionToken;
-
 	}
 			
 		
@@ -77,7 +72,5 @@ public class AWSSecurityToken {
 		Node firstCredentials = credentials_node.item(0);
 		
 		return (Element) firstCredentials;
-
-	
 	 }
 }

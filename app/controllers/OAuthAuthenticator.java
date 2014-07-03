@@ -46,39 +46,34 @@ public class OAuthAuthenticator extends Controller {
 	private static final String REDIRECT_URI = "http://localhost:9000/oath2Callback";
 	private static final String GOOGLE_TOKEN_ENDPOINT = "https://accounts.google.com/o/oauth2/token";
 	
-  public static Result login() {
+	public static Result login() {
 	  
-	  String state = new BigInteger(130, new SecureRandom()).toString(32);
-	  session().clear();
-	  session("state", state);
+		String state = new BigInteger(130, new SecureRandom()).toString(32);
+		session().clear();
+		session("state", state);
 
-	  String oAuthURL = "https://accounts.google.com/o/oauth2/auth?client_id=" + CLIENT_ID + "&response_type=code&scope=openid%20email&redirect_uri=" + REDIRECT_URI + "&state=" + state;
-	  return redirect(oAuthURL);
-	  
-  }
+		String oAuthURL = "https://accounts.google.com/o/oauth2/auth?client_id=" + CLIENT_ID + "&response_type=code&scope=openid%20email&redirect_uri=" + REDIRECT_URI + "&state=" + state;
+		return redirect(oAuthURL);
+	 
+	}
 
-  public static Result logout() {
-	    session().clear();
-	    
-	    return redirect(
-	        routes.OAuthAuthenticator.login()
-	    );
+	public static Result logout() {
+
+		session().clear();
+	    return redirect(routes.OAuthAuthenticator.login());
 	}
   
-  public static Result oath2Callback(String state, String code) {
+	public static Result oath2Callback(String state, String code) {
 	  
-	  if (!state.equals(session("state"))) {  
-		  return ok("Error - state cookies don't match");
-	  }
-      else { 
-    	  postLoginDetails(code);
-      }
+		if (!state.equals(session("state"))) {  
+			return ok("Error - state cookies don't match");
+		}
+		else { 
+			postLoginDetails(code);
+		}
 		  
-	  return redirect(
-	            routes.Application.index()
-	        );
-	  
-  }
+		return redirect(routes.Application.index()); 
+	}
   
   public static void postLoginDetails(String code){
 	  
@@ -87,8 +82,7 @@ public class OAuthAuthenticator extends Controller {
 	  HttpClient client = new DefaultHttpClient();
 	  HttpPost request = new HttpPost(GOOGLE_TOKEN_ENDPOINT);
 	    
-	    try {
-	    	
+	    try {	
 	    	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
 	    	nameValuePairs.add(new BasicNameValuePair("code", code));
 	    	nameValuePairs.add(new BasicNameValuePair("client_id", CLIENT_ID));
@@ -108,11 +102,15 @@ public class OAuthAuthenticator extends Controller {
 			session("email", googleIdToken.getPayload().getEmail());
 			session("subject", googleIdToken.getPayload().getSubject());
 			session("webToken", hashedIdToken);
-		    
-	    } catch (ClientProtocolException e) {
-            
-	    } catch (IOException e) {    	
+	    }
 	    
+	    catch (ClientProtocolException e) 
+	    {
+	    	System.out.println(e.toString());	
+	    }
+	    catch (IOException ioe)
+	    {
+	    	System.out.println(ioe.toString());
 	    } 
-  }
+  	}
 }

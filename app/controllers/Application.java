@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -21,6 +23,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
 import play.*;
 import play.mvc.*;
 import util.AWSSecurityToken;
@@ -34,31 +37,26 @@ public class Application extends Controller {
 	public static String ROLE_ARN = Play.application().configuration().getString("application.awsRole");
 	
 	@Security.Authenticated(Secured.class)
-    public static Result index() {
+	public static Result index() {
 	
         return ok(index.render("Your subscription is " + request().username()));
     }
 	
 	@Security.Authenticated(Secured.class)
-    public static Result retrieveCreds(String arn) {
-		
+	public static Result retrieveCreds(String arn) {
 		
 		AWSSecurityToken awsSecurityToken = new AWSSecurityToken();
-		
 
 		if (arn != null) {
-			
 			ROLE_ARN = arn;
 		}
 		
 		try {
-		
 			Element element  = awsSecurityToken.getSTSResponse(session("webToken"), ROLE_ARN);
 			session("secretKey", awsSecurityToken.getSecretKey(element));
 			session("accessKey", awsSecurityToken.getAccessKey(element));
 			session("sessionToken", awsSecurityToken.getSessionToken(element));
-
-		}
+		}	
 		catch (ClientProtocolException cpe){}
 		catch (IOException ie){}
 		catch ( ParserConfigurationException pce){}
@@ -70,7 +68,7 @@ public class Application extends Controller {
 	
 	
 	@Security.Authenticated(Secured.class)
-    public static Result updateAWSFile() {
+	public static Result updateAWSFile() {
 		
 		try {
 			PrintWriter writer = new PrintWriter(FILE_LOCATION, "UTF-8");
@@ -81,11 +79,15 @@ public class Application extends Controller {
 			writer.println("aws_security_token = " + session().get("sessionToken"));
 			writer.close();
 		}
-		catch (FileNotFoundException fnf) {}
-		catch (UnsupportedEncodingException uee) {}
+		catch (FileNotFoundException fnf) {
+			System.out.println(fnf.toString());	
+		}
 		
-		return ok(updateFile.render(request().username(), session().get("accessKey"), session().get("secretKey"), session().get("sessionToken"), DURATION, FILE_LOCATION));
+		catch (UnsupportedEncodingException uee) {
+			System.out.println(uee.toString());	
+		}
 		
+		return ok(updateFile.render(request().username(), session().get("accessKey"), session().get("secretKey"), session().get("sessionToken"), DURATION, FILE_LOCATION));	
 	}
 
 	
@@ -95,6 +97,5 @@ public class Application extends Controller {
 		ConsoleURL consoleURL = new ConsoleURL();
 		String url = consoleURL.requestUrl(session().get("accessKey"), session().get("secretKey"), session().get("sessionToken"));	
 		return ok(portalLogin.render(request().username(), session().get("accessKey"), session().get("secretKey"), session().get("sessionToken"), DURATION, FILE_LOCATION, url));
-
 	}
 }

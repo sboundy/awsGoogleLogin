@@ -22,37 +22,32 @@ public class ConsoleURL {
 	
 		String sessionJson = String.format("{\"%1$s\":\"%2$s\",\"%3$s\":\"%4$s\",\"%5$s\":\"%6$s\"}", "sessionId", accessKey, "sessionKey", secretKey, "sessionToken", sessionToken);
 		 
-		try {
-			String getSigninTokenURL = signInURL + "?Action=getSigninToken" + "&SessionType=json&Session=" + URLEncoder.encode(sessionJson, "UTF-8");
+			try {
+				String getSigninTokenURL = signInURL + "?Action=getSigninToken" + "&SessionType=json&Session=" + URLEncoder.encode(sessionJson, "UTF-8");
 		
-			URL url = new URL(getSigninTokenURL);
-			URLConnection conn = url.openConnection ();
-			BufferedReader bufferReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));  
+				URL url = new URL(getSigninTokenURL);
+				URLConnection conn = url.openConnection ();
+				BufferedReader bufferReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));  
 		
-			String returnContent = bufferReader.readLine();
-			String signinToken = new JSONObject(returnContent).getString("SigninToken");
-			String signinTokenParameter = "&SigninToken=" +  URLEncoder.encode(signinToken,"UTF-8");
-			String destinationParameter = "&Destination=" + URLEncoder.encode(consoleURL,"UTF-8");
-			bufferReader.close();
+				String returnContent = bufferReader.readLine();
+				String signinToken = new JSONObject(returnContent).getString("SigninToken");
+				String signinTokenParameter = "&SigninToken=" +  URLEncoder.encode(signinToken,"UTF-8");
+				String destinationParameter = "&Destination=" + URLEncoder.encode(consoleURL,"UTF-8");
+				bufferReader.close();
 			
-			loginURL = signInURL + "?Action=login" + signinTokenParameter + destinationParameter;	
+				loginURL = signInURL + "?Action=login" + signinTokenParameter + destinationParameter;	
+			}
 		
-		}
+			catch(IOException io){
+				System.out.println(io.toString());
+			}
 		
-		catch(IOException io){
-			
-			System.out.println(io.toString());
-			
-		}
+			catch(JSONException je){
+				System.out.println(je.toString());
+			}
 		
-		catch(JSONException je){
-			
-			System.out.println(je.toString());
-			
-		}
-		
-		return loginURL;
-	
-		}
+			return loginURL;
+
+	}
 
 }
