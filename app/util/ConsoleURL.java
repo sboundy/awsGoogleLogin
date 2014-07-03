@@ -31,11 +31,10 @@ public class ConsoleURL {
 		
 			String returnContent = bufferReader.readLine();
 			String signinToken = new JSONObject(returnContent).getString("SigninToken");
-
 			String signinTokenParameter = "&SigninToken=" +  URLEncoder.encode(signinToken,"UTF-8");
-
 			String destinationParameter = "&Destination=" + URLEncoder.encode(consoleURL,"UTF-8");
-		
+			bufferReader.close();
+			
 			loginURL = signInURL + "?Action=login" + signinTokenParameter + destinationParameter;	
 		
 		}

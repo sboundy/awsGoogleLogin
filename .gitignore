@@ -1,7 +1,12 @@
 logs
+build.sbt
 project/project
 project/target
 target
+conf/application.conf
+lib
+.target
+bin
 tmp
 .history
 dist

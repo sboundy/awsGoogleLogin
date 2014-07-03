@@ -103,7 +103,7 @@ public class OAuthAuthenticator extends Controller {
 	    	JsonFactory jsonFactory = new GsonFactory();
 	    	String hashedIdToken = gson.fromJson(rd, OauthResponse.class).getId_token();
 	    	GoogleIdToken googleIdToken = GoogleIdToken.parse(jsonFactory, hashedIdToken);
-		  
+	    	rd.close();
 
 			session("email", googleIdToken.getPayload().getEmail());
 			session("subject", googleIdToken.getPayload().getSubject());
@@ -112,6 +112,7 @@ public class OAuthAuthenticator extends Controller {
 	    } catch (ClientProtocolException e) {
             
 	    } catch (IOException e) {    	
-	 }    
+	    
+	    } 
   }
 }
